@@ -65,3 +65,5 @@ end
 gem "shakapacker", "= 6.6"
 
 gem "react_on_rails", "= 13.3"
+
+gem "cssbundling-rails", "~> 1.2"

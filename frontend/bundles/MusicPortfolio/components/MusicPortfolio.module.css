@@ -1,0 +1,18 @@
+
+.bright {
+    color: gold;
+    font-weight: bold;
+}
+
+
+.test {
+    background-color: lightblue;
+    margin: 50px;
+    border: 10 black;
+
+}
+
+.test2 {
+    text-align: center;
+}
+
