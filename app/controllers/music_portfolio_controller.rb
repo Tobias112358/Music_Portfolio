@@ -7,11 +7,10 @@ class MusicPortfolioController < ApplicationController
 
     private
     def changeReleaseMain(_id)
-      _release_name = MusicRelease.find_by(id: _id).name
-      _youtube_id = MusicRelease.find_by(id: _id).youtube_id
-      _spotify_id = MusicRelease.find_by(id: _id).spotify_id
+      _release_name = MusicRelease.find_by(id: 1).name
+      _youtube_id = MusicRelease.find_by(id: 1).youtube_id
+      _spotify_id = MusicRelease.find_by(id: 1).spotify_id
       _soundcloud_id = MusicRelease.find_by(id: _id).soundcloud_id
-      puts(_release_name)
       return { release_name: _release_name , release_id: _id, youtube_id: _youtube_id, spotify_id: _spotify_id, soundcloud_id: _soundcloud_id}
     end
 
@@ -31,8 +30,7 @@ class MusicPortfolioController < ApplicationController
       _youtube_id = MusicRelease.find_by(id: _id).youtube_id
       _spotify_id = MusicRelease.find_by(id: _id).spotify_id
       _soundcloud_id = MusicRelease.find_by(id: _id).soundcloud_id
-      puts("_release_name is: ")
-      puts(_release_name)
+
       @music_portfolio_props = { release_name: _release_name , release_id: _id, youtube_id: _youtube_id, spotify_id: _spotify_id, soundcloud_id: _soundcloud_id}
       
       render json: @music_portfolio_props
