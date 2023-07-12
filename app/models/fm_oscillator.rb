@@ -1,0 +1,2 @@
+class FmOscillator < ApplicationRecord
+end

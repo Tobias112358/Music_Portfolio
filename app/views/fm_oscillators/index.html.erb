@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Fm oscillators</h1>
+
+<div id="fm_oscillators">
+  <% @fm_oscillators.each do |fm_oscillator| %>
+    <%= render fm_oscillator %>
+    <p>
+      <%= link_to "Show this fm oscillator", fm_oscillator %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New fm oscillator", new_fm_oscillator_path %>

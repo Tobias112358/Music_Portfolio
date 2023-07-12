@@ -3,6 +3,8 @@
 
 const { devServer, inliningCss } = require('shakapacker');
 
+const wasm = require('webpack');
+
 const webpackConfig = require('./webpackConfig');
 
 const developmentEnvOnly = (clientWebpackConfig, _serverWebpackConfig) => {
@@ -20,7 +22,14 @@ const developmentEnvOnly = (clientWebpackConfig, _serverWebpackConfig) => {
         },
       }),
     );
-  }
+  } 
+
+};
+
+const experiments = {
+      experiments: {
+        asyncWebAssembly: true,
+      },
 };
 
 module.exports = webpackConfig(developmentEnvOnly);

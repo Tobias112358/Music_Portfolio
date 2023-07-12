@@ -3,7 +3,6 @@ import style from '../MusicPortfolio.module.css';
 import axios from 'axios';
 import '../../../../css/application.css'
 
-
 //
 var getRelease = async (_id) => {
 
@@ -22,7 +21,6 @@ var getRelease = async (_id) => {
     return array;
   })
 }
-
 
 
 function NextReleaseButton(props) {
@@ -60,6 +58,7 @@ function ChangeRelease(props) {
     setReleaseName(e[3]);
     setReleaseID(e[4]);
   }
+  
 
   return(
     <div className="">
