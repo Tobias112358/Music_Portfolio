@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, setState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './MusicPortfolio.module.css';
 import ChangeRelease from './components/ChangeRelease.js';
 import '../../../css/application.css'
