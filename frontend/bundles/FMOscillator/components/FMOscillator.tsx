@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import style from './FMOscillator.module.css';
-import './components/TunerComponent'
-import TunerComponent from './components/TunerComponent';
 import Keyboard from './components/keyboard';
 import '../../../css/application.css'
 
@@ -227,6 +225,7 @@ const FMOscillator = (props) => {
     } catch(err) {
       console.error(`Unexpected error in loadWasm. [Message: ${err.message}]`);
     }
+    setName("big old name");
   };
 
   return (

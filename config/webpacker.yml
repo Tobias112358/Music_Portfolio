@@ -15,6 +15,20 @@ default: &default
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false
 
+  extensions:
+  - .jsx
+  - .js
+  - .sass
+  - .scss
+  - .css
+  - .png
+  - .svg
+  - .gif
+  - .jpeg
+  - .jpg
+  - .tsx
+  - .ts
+
 development:
   <<: *default
   # This is false since we're running `bin/webpacker -w` in Procfile.dev-setic

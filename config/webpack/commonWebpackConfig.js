@@ -11,10 +11,17 @@ const commonOptions = {
 };
 
 
-const customConfig = require('./myConfigs/experiments');
+const experimentsConfig = require('./myConfigs/experiments');
 
 // Copy the object using merge b/c the baseClientWebpackConfig and commonOptions are mutable globals
-const commonWebpackConfig = () => merge({}, baseClientWebpackConfig, commonOptions, customConfig);
+const commonWebpackConfig = () => merge({}, baseClientWebpackConfig, commonOptions, experimentsConfig);
 
+
+//Typescript
+
+const typescriptConfig = require('./myConfigs/typescript');
+
+// Copy the object using merge b/c the baseClientWebpackConfig and commonOptions are mutable globals
+commonWebpackConfig = () => merge({}, commonWebpackConfig, commonOptions, typescriptConfig);
 
 module.exports = commonWebpackConfig;

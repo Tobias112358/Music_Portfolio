@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import style from './MusicPortfolio.module.css';
-import ChangeRelease from './components/ChangeRelease.js';
+import ChangeRelease from './components/ChangeRelease.ts';
 import '../../../css/application.css'
 
 const MusicPortfolio = (props) => {
