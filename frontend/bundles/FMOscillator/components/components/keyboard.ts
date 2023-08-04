@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect, useBoolean } from 'react';
 import '../../../../css/application.css'
+import {StartSequence, StopSequence} from './sequencer'
 
 // midi note number to frequency conversion 
 function mtof(m) {
@@ -16,7 +17,8 @@ const setSequenceStep = (fm, midiNote, sequenceMode, setSequenceMode, step, setS
         setSequenceMode(false);
         if(fm.toggle_sequencer_mode()) {
             //wasm.start_sequence(fm);
-            fm.start_sequence();
+            //fm.start_sequence();
+            StartSequence(fm);
             setStep("-");
         }
       }
