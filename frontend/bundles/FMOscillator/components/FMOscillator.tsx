@@ -14,7 +14,6 @@ const PlayButton = (props: { setFM: (arg0: any) => void; fm: any; wasm: any; set
       fm.set_fm_frequency(0);
       fm.set_fm_amount(0);
       fm.set_gain(0.8);
-      //fm.set_sequence([440.0, 880.0,440.0, 880.0,440.0, 880.0,440.0, 880.0,440.0, 880.0,440.0, 880.0,440.0, 880.0,440.0, 880.0]);
       setTempo(fm.get_tempo());
       //fm.get_midi_access();
 
@@ -30,7 +29,7 @@ const PlayButton = (props: { setFM: (arg0: any) => void; fm: any; wasm: any; set
   }
 
   return(
-    <div>
+    <div className={props.fm ? "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded w-28 text-center float-center my-4" : "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded w-28 text-center float-center my-4"}>
       <input type="button" value="play" onClick={() => {props.setFM(play(props.fm, props.wasm, props.setTempo))}} />
     </div>
   );
@@ -63,7 +62,8 @@ const PrimarySlider = (props:any) => {
 
   return(
     <div>
-      <input type="range" min="1" max="100" value="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
+      <label>Pitch</label>
+      <input className="w-full" type="range" min="1" max="100" defaultValue="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
     </div>
   );
 }
@@ -78,8 +78,9 @@ const PrimaryGain = (props:any) => {
   }
 
   return(
-    <div>
-      <input type="range" min="1" max="100" value="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
+    <div className="">
+      <label>Gain</label>
+      <input className="w-full" type="range" min="1" max="100" defaultValue="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
     </div>
   );
 }
@@ -95,7 +96,8 @@ const FMFrequency = (props:any) => {
 
   return(
     <div>
-      <input type="range" min="1" max="100" value="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
+      <label>FM Frequency</label>
+      <input className="w-full" type="range" min="1" max="100" defaultValue="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
     </div>
   );
 }
@@ -111,7 +113,8 @@ const FMAmount = (props:any) => {
 
   return(
     <div>
-      <input type="range" min="1" max="100" value="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
+      <label>FM Amount</label>
+      <input className="w-full" type="range" min="1" max="100" defaultValue="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
     </div>
   );
 }
@@ -127,7 +130,8 @@ const LFOAmplitude = (props:any) => {
 
   return(
     <div>
-      <input type="range" min="1" max="100" value="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
+      <label>LFO Amount</label>
+      <input className="w-full" type="range" min="1" max="100" defaultValue="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
     </div>
   );
 }
@@ -143,7 +147,8 @@ const LFOFrequency = (props:any) => {
 
   return(
     <div>
-      <input type="range" min="1" max="100" value="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
+      <label>LFO Frequency</label>
+      <input className="w-full" type="range" min="1" max="100" defaultValue="50" onChange={(e) => {props.setFM(slide(props.fm, e))}} />
     </div>
   );
 }
@@ -160,7 +165,7 @@ const SetTempo = (props:any) => {
   return(
     <div>
       <h3>Tempo:</h3>
-      <input type="range" min="1" max="240" value="0" onChange={(e) => {props.setFM(slide(props.fm, e)); props.setTempo(props.fm.get_tempo())}} />
+      <input className="w-full p-4" type="range" min="1" max="240" defaultValue="0" onChange={(e) => {props.setFM(slide(props.fm, e)); props.setTempo(props.fm.get_tempo())}} />
     </div>
   );
 }
@@ -195,7 +200,7 @@ const WaveSelect = (props:any) => {
   }
 
   return(
-    <div>
+    <div className="text-l">
       <h3>{props.componentName}</h3>
       <ul>
         <li><label htmlFor="sine">Sine: </label><input name="oscillator_type" id="sine" type="radio" value="sine" onChange={(e) => {selectWave(props.fm, e, props.componentName)}} /></li>
@@ -235,11 +240,12 @@ const FMOscillator = (props:Synthesizer) => {
     <div className="text-xl" >
       <h3 className="">Osc, {name}!</h3>
       <hr />
-      <PlayButton fm={fm} setFM={setFM} wasm={wasm} setTempo={setTempo} />
-      <br />
-      <div className="grid grid-cols-4 w-full bg-slate-300 text-center">
+      <div className="w-screen flex items-center justify-center">
+        <PlayButton fm={fm} setFM={setFM} wasm={wasm} setTempo={setTempo} />
+      </div>
+      <div className="grid grid-cols-4 w-fit bg-slate-300 text-center">
         <div className="border-2 grid grid-cols-2 m-4" >
-          <div className="border-2">
+          <div className="padding-2">
             <PrimaryGain fm={fm} setFM={setFM} />
             <br />
             <PrimarySlider fm={fm} setFM={setFM} />
@@ -247,29 +253,31 @@ const FMOscillator = (props:Synthesizer) => {
           <WaveSelect fm={fm} setFM={setFM} componentName={"Primary Wave"}/>
         </div>
         
-        <div className="border-2" >
-          <FMFrequency fm={fm} setFM={setFM} />
-          <br />
-          <FMAmount fm={fm} setFM={setFM} />
-          <br />
+        <div className="border-2 grid grid-cols-2 m-4" >
+          <div className="padding-2">
+            <FMFrequency fm={fm} setFM={setFM} />
+            <br />
+            <FMAmount fm={fm} setFM={setFM} />
+          </div>
           <WaveSelect fm={fm} setFM={setFM} componentName={"FM Wave"}/>
         </div>
         
-        <div className="border-2" >
-
-          <LFOFrequency fm={fm} setFM={setFM} />
-          <br />
-          <LFOAmplitude fm={fm} setFM={setFM} />
-          <br />
+        <div className="border-2 grid grid-cols-2 m-4" >
+          <div className="padding-2">
+            <LFOFrequency fm={fm} setFM={setFM} />
+            <br />
+            <LFOAmplitude fm={fm} setFM={setFM} />
+          </div>
           <WaveSelect fm={fm} setFM={setFM} componentName={"LFO"}/>
         </div>
-        <div className="border-2">
+        <div className="m-4">
           <SetTempo fm={fm} setFM={setFM} setTempo={setTempo} />
           <br />
           <TempoDisplay tempo={tempo} />
           <br />
+          <input className="border-1 rounded" type="button" value="Sync LFO with tempo" onClick={() => {fm.sync_lfo_with_tempo()}} />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-4 w-screen flex items-center justify-center">
           <Keyboard name={name} fm={fm} setFM={setFM} wasm={wasm}  />
         </div>
       </div>

@@ -68,13 +68,8 @@ const Keyboard = (props:any) => {
 
   const [name, setName] = useState(props.name);
   const [fm] = useState(props.fm);
-  const [transpose, setTranspose] = useState(0);
+
   const [sequenceMode, setSequenceMode] = useState(false);
-  const [step, setStep] = useState<string | number>("-");
-
-  const toggleSequenceMode = () => {
-  };
-
   useEffect(() => {
 
     if(sequenceMode) {
@@ -83,19 +78,57 @@ const Keyboard = (props:any) => {
     } else {
         setStep("-");
     }
-  });
+
+  }, [sequenceMode]);
+
+  const [step, setStep] = useState<string | number>("-");
+  const [transposeButtonClassNames, setTransposeButtonClassNames] = useState<Array<String>>(["border-spacing-5", "border-blue-900", "border-8", "p-4", "m-1", "hover:bg-slate-900"]);
+
+  const [transpose, setTranspose] = useState(0);
+  useEffect(() => {
+    let result :Array<String>= [...transposeButtonClassNames];
+    if(transpose === 0) {
+        if(result.length >= 7) result = result.slice(0, 6 - result.length);
+        result = result.concat(["bg-slate-700"]);
+    } else if (transpose === 12){
+        if(result.length >= 7) result = result.slice(0, 6 - result.length);
+        result = result.concat(["bg-slate-600"]);
+    } else if(transpose === 24){
+        if(result.length >= 7) result = result.slice(0, 6 - result.length);
+        result = result.concat(["bg-slate-500"]);
+    } else if(transpose === 36){
+        if(result.length >= 7) result = result.slice(0, 6 - result.length);
+        result = result.concat(["bg-slate-400"]);
+    } else if(transpose === -12){
+        if(result.length >= 7) result = result.slice(0, 6 - result.length);
+        result = result.concat(["bg-slate-800"]);
+    } else if(transpose === -24){
+        if(result.length >= 7) result = result.slice(0, 6 - result.length);
+        result = result.concat(["bg-slate-900"]);
+    } else if(transpose === -36){
+        if(result.length >= 7) result = result.slice(0, 6 - result.length);
+        result = result.concat(["bg-slate-950"]);
+    }
+
+    setTransposeButtonClassNames(result);
+  }, [transpose]);
   
     return(
-        <div className="bg-slate-800">
-            <div className="bg-black text-yellow-200 text-2xl">
-                <p>Step: {step}</p>
+        <div className="bg-slate-800 w-full">
+            <div className="w-full bg-black text-yellow-200 text-2xl grid grid-cols-3">
+                <div className="col-span-2">
+                    <p>Transposition: {transpose}</p>
+                </div>
+                <div>
+                    <p>Step: {step}</p>
+                </div>
             </div>
             <div className="w-full bg-slate-700 grid grid-cols-3 text-2xl text-white p-1">
-                <input className="border-spacing-5 border-blue-900 border-8 p-4 m-1" type="button" value="up" onClick={() => {setTranspose(transpose + 12)}}/>
-                <input className="border-spacing-5 border-blue-900 border-8 p-4 m-1" type="button" value="down" onClick={() => {setTranspose(transpose - 12)}}/>
-                <input className={sequenceMode ? "border-spacing-5 border-red-900 border-8 p-4 m-1" : "border-spacing-5 border-blue-900 border-8 p-4 m-1"} type="button" value="sequenceMode" onClick={() => {setSequenceMode(!sequenceMode);}}/>
+                <input className={transposeButtonClassNames.join(" ")} type="button" value="up" onClick={() => {transpose < 36 ? setTranspose(transpose + 12):null;}}/>
+                <input className={transposeButtonClassNames.join(" ")} type="button" value="down" onClick={() => {transpose > -36 ? setTranspose(transpose - 12):null;}}/>
+                <input className={sequenceMode ? "border-spacing-5 border-red-900 border-8 p-4 m-1 hover:bg-slate-900" : "border-spacing-5 border-blue-900 border-8 p-4 m-1 hover:bg-slate-900"} type="button" value="sequenceMode" onClick={() => {setSequenceMode(!sequenceMode);}}/>
             </div>
-            <div className="m-10 grid grid-cols-12 h-52 grid-rows-1">
+            <div className="m-2 grid grid-cols-12 h-52 grid-rows-1 px-24">
                 <WhiteKey fm={props.fm} setFM={props.setFM} midiNote={60 + transpose} sequenceMode={sequenceMode} setSequenceMode={setSequenceMode} step={step} setStep={setStep} wasm={props.wasm} />
                 <BlackKey fm={props.fm} setFM={props.setFM} midiNote={61 + transpose} sequenceMode={sequenceMode} setSequenceMode={setSequenceMode} step={step} setStep={setStep} wasm={props.wasm} />
                 <WhiteKey fm={props.fm} setFM={props.setFM} midiNote={62 + transpose} sequenceMode={sequenceMode} setSequenceMode={setSequenceMode} step={step} setStep={setStep} wasm={props.wasm} />
