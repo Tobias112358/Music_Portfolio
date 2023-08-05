@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import style from './MusicPortfolio.module.css';
-import ChangeRelease from './components/ChangeRelease.ts';
+import ChangeRelease from './components/ChangeRelease';
 import '../../../css/application.css'
 
-const MusicPortfolio = (props) => {
+const MusicPortfolio = (props:any) => {
 
-  const [wasm, setWasm] = useState();
+  const [wasm, setWasm] = useState<any>();
 
   useEffect(() => {
     loadWasm();

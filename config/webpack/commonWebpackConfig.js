@@ -8,20 +8,29 @@ const commonOptions = {
   resolve: {
     extensions: ['.css', '.ts', '.tsx'],
   },
+  module: {
+    rules: [
+      { 
+        test: /\.tsx?$/,
+        loader: "ts-loader"
+      }
+    ]
+  }
 };
 
 
 const experimentsConfig = require('./myConfigs/experiments');
 
 // Copy the object using merge b/c the baseClientWebpackConfig and commonOptions are mutable globals
-const commonWebpackConfig = () => merge({}, baseClientWebpackConfig, commonOptions, experimentsConfig);
+var commonWebpackConfig = () => merge({}, baseClientWebpackConfig, commonOptions, experimentsConfig);
 
 
 //Typescript
 
-const typescriptConfig = require('./myConfigs/typescript');
+const typescriptConfig = require('./myConfigs/typescript-webpack');
 
 // Copy the object using merge b/c the baseClientWebpackConfig and commonOptions are mutable globals
-commonWebpackConfig = () => merge({}, commonWebpackConfig, commonOptions, typescriptConfig);
+//commonWebpackConfig = () => merge({}, commonWebpackConfig, commonOptions, typescriptConfig);
+
 
 module.exports = commonWebpackConfig;

@@ -1,6 +1,14 @@
-const { environment } = require('@rails/webpacker')
-  environment.loaders.append('typescript', {
-    test: /.(ts|tsx)$/,
-    loader: 'ts-loader'
-  });
-module.exports = environment
+//webpack.config.js
+const path = require('path');
+
+module.exports = {
+  
+  module: {
+    rules: [
+      { 
+        test: /\.tsx?$/,
+        loader: "ts-loader"
+      }
+    ]
+  }
+};

@@ -2,12 +2,13 @@
     "compilerOptions": {
       "declaration":false,
       "emitDecoratorMetadata":true,
+      "noEmit": false,
       "experimentalDecorators":true,
       "lib": [
         "es6",
         "dom"
       ],
-      "module":"es6",
+      "module":"ESNext",
       "moduleResolution":"node",
       "sourceMap":true,
       "target":"es5",
@@ -20,12 +21,14 @@
     },
     "include": [
         "frontend/**/*.ts",
-        "frontend/**/*.tsx",
+        "frontend/**/*.tsx", "frontend/bundles/FMOscillator/components/components/keyboard.js",
       ],
     "exclude": [
       "**/*.spec.ts",
       "node_modules",
-      "public"
+      "public", 
+      "dist", 
+      "lib"
     ],
     "compileOnSave":false
   }

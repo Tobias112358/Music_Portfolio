@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useBoolean } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../../../css/application.css'
 import {StartSequence, StopSequence} from './sequencer'
 
 // midi note number to frequency conversion 
-function mtof(m) {
+function mtof(m:number):any {
     return Math.pow(2, (m - 69) / 12) * 440;
   }
 
-const setSequenceStep = (fm, midiNote, sequenceMode, setSequenceMode, step, setStep, wasm) => {
+const setSequenceStep = (fm:any, midiNote:number, sequenceMode:any, setSequenceMode:any, step:any, setStep:any, wasm:any) => {
     if (fm) {
         fm.set_sequence_step(parseInt(mtof(midiNote)), step-1);
         setStep(step+1);
@@ -25,16 +25,16 @@ const setSequenceStep = (fm, midiNote, sequenceMode, setSequenceMode, step, setS
       return fm;
 }
 
-const setFrequency = (fm, midiNote) => {
+const setFrequency = (fm:any, midiNote:any) => {
     if (fm) {
         fm.set_note(parseInt(midiNote));
       }
       return fm;
 }
 
-const WhiteKey = props => {
+const WhiteKey = (props:any) => {
 
-    var clickFunction;
+    var clickFunction:any;
     if(props.sequenceMode){
         clickFunction = setSequenceStep
     }
@@ -48,8 +48,8 @@ const WhiteKey = props => {
     )
 }
 
-const BlackKey = props => {
-    var clickFunction;
+const BlackKey = (props:any) => {
+    var clickFunction:any;
     if(props.sequenceMode){
         clickFunction = setSequenceStep
     }
@@ -64,13 +64,13 @@ const BlackKey = props => {
 }
 
 
-const Keyboard = (props) => {
+const Keyboard = (props:any) => {
 
   const [name, setName] = useState(props.name);
   const [fm] = useState(props.fm);
   const [transpose, setTranspose] = useState(0);
   const [sequenceMode, setSequenceMode] = useState(false);
-  const [step, setStep] = useState("-");
+  const [step, setStep] = useState<string | number>("-");
 
   const toggleSequenceMode = () => {
   };
@@ -78,7 +78,7 @@ const Keyboard = (props) => {
   useEffect(() => {
 
     if(sequenceMode) {
-        if(isNaN(step))
+        if(typeof(step) === "string")
             setStep(1);
     } else {
         setStep("-");
@@ -114,7 +114,10 @@ const Keyboard = (props) => {
 }
 
 Keyboard.propTypes = {
-  name: PropTypes.string.isRequired, // this is passed from the Rails view
+  name: PropTypes.string.isRequired, 
+  fm: PropTypes.any, 
+  setFM: PropTypes.any, 
+  wasm: PropTypes.any, 
 };
 
 export default Keyboard;

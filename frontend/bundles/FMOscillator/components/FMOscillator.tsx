@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import style from './FMOscillator.module.css';
 import Keyboard from './components/keyboard';
 import '../../../css/application.css'
 
 var isSynthActive = false;
 
 
-const PlayButton = (props) => {
-  var play = (fm, wasm, setTempo) => {
+const PlayButton = (props: { setFM: (arg0: any) => void; fm: any; wasm: any; setTempo: any; }) => {
+  var play = (fm:any, wasm:any, setTempo:any) => {
     if (fm === null || fm === undefined) {
       fm = new wasm.FmOsc();
       fm.set_note(50);
@@ -37,9 +36,9 @@ const PlayButton = (props) => {
   );
 }
 
-const StartSequence = (props) => {
+const StartSequence = (props:any) => {
   
-  var slide = (fm, event) => {
+  var slide = (fm:any) => {
     if (fm) {
       fm.start_sequence();
     }
@@ -48,14 +47,14 @@ const StartSequence = (props) => {
 
   return(
     <div>
-      <input type="button" value="Start Sequence" onClick={(e) => {props.setFM(slide(props.fm, e))}} />
+      <input type="button" value="Start Sequence" onClick={(e) => {props.setFM(slide(props.fm))}} />
     </div>
   );
 }
 
-const PrimarySlider = (props) => {
+const PrimarySlider = (props:any) => {
   
-  var slide = (fm, event) => {
+  var slide = (fm:any, event:any) => {
     if (fm) {
       fm.set_note(parseInt(event.target.value));
     }
@@ -69,9 +68,9 @@ const PrimarySlider = (props) => {
   );
 }
 
-const PrimaryGain = (props) => {
+const PrimaryGain = (props:any) => {
   
-  var slide = (fm, event) => {
+  var slide = (fm:any, event:any) => {
     if (fm) {
       fm.set_gain(parseFloat(event.target.value)/100);
     }
@@ -85,9 +84,9 @@ const PrimaryGain = (props) => {
   );
 }
 
-const FMFrequency = (props) => {
+const FMFrequency = (props:any) => {
   
-  var slide = (fm, event) => {
+  var slide = (fm:any, event:any) => {
     if (fm) {
       fm.set_fm_frequency(parseFloat(event.target.value));
     }
@@ -101,9 +100,9 @@ const FMFrequency = (props) => {
   );
 }
 
-const FMAmount = (props) => {
+const FMAmount = (props:any) => {
 
-  var slide = (fm, event) => {
+  var slide = (fm:any, event:any) => {
     if (fm) {
       fm.set_fm_amount(parseFloat(event.target.value));
     }
@@ -117,11 +116,11 @@ const FMAmount = (props) => {
   );
 }
 
-const LFOAmplitude = (props) => {
+const LFOAmplitude = (props:any) => {
 
-  var slide = (fm, event) => {
+  var slide = (fm:any, event:any) => {
     if (fm) {
-      fm.set_lfo_amplitude(parseFloat(event.target.value/100));
+      fm.set_lfo_amplitude(Number(event.target.value/100));
     }
     return fm;
   }
@@ -133,9 +132,9 @@ const LFOAmplitude = (props) => {
   );
 }
 
-const LFOFrequency = (props) => {
+const LFOFrequency = (props:any) => {
 
-  var slide = (fm, event) => {
+  var slide = (fm:any, event:any) => {
     if (fm) {
       fm.set_lfo_frequency(parseFloat(event.target.value));
     }
@@ -149,9 +148,9 @@ const LFOFrequency = (props) => {
   );
 }
 
-const SetTempo = (props) => {
+const SetTempo = (props:any) => {
 
-  var slide = (fm, event) => {
+  var slide = (fm:any, event:any) => {
     if (fm) {
       fm.set_tempo(parseFloat(event.target.value));
     }
@@ -166,7 +165,7 @@ const SetTempo = (props) => {
   );
 }
 
-const TempoDisplay = (props) => {
+const TempoDisplay = (props:any) => {
   return(
     <div>
       <h3>Tempo: {props.tempo}</h3>
@@ -174,9 +173,9 @@ const TempoDisplay = (props) => {
   );
 }
 
-const WaveSelect = (props) => {
+const WaveSelect = (props:any) => {
 
-  var selectWave = (fm, event, componentName) => {
+  var selectWave = (fm:any, event:any, componentName:any) => {
     if (fm) {
       switch(componentName) {
         case "Primary Wave":
@@ -208,10 +207,14 @@ const WaveSelect = (props) => {
   );
 }
 
-const FMOscillator = (props) => {
+interface Synthesizer {
+  name: string;
+}
+
+const FMOscillator = (props:Synthesizer) => {
   const [name, setName] = useState(props.name);
-  const [fm, setFM] = useState(props.fm);
-  const [wasm, setWasm] = useState();
+  const [fm, setFM] = useState<any>();
+  const [wasm, setWasm] = useState<any>();
   const [sequence, setSequence] = useState(0);
   const [tempo, setTempo] = useState('-');
 
@@ -229,7 +232,7 @@ const FMOscillator = (props) => {
   };
 
   return (
-    <div className="" >
+    <div className="text-xl" >
       <h3 className="">Osc, {name}!</h3>
       <hr />
       <PlayButton fm={fm} setFM={setFM} wasm={wasm} setTempo={setTempo} />
@@ -265,8 +268,6 @@ const FMOscillator = (props) => {
           <br />
           <TempoDisplay tempo={tempo} />
           <br />
-          <StartSequence fm={fm} setFM={setFM} setTempo={setTempo} />
-          <br/>
         </div>
         <div className="col-span-4">
           <Keyboard name={name} fm={fm} setFM={setFM} wasm={wasm}  />

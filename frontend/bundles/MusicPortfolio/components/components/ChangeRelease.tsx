@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import style from '../MusicPortfolio.module.css';
 import axios from 'axios';
 import '../../../../css/application.css'
 
 //
-var getRelease = async (_id) => {
+var getRelease = async (_id:any) => {
 
-  const token = document.querySelector('[name=csrf-token]').content
+  const token = document.querySelector('[name=csrf-token]')?.textContent
 
   axios.defaults.headers.common['X-CSRF-TOKEN'] = token
 
@@ -23,7 +22,7 @@ var getRelease = async (_id) => {
 }
 
 
-function NextReleaseButton(props) {
+function NextReleaseButton(props:any) {
   return(
     <div>
       
@@ -33,7 +32,7 @@ function NextReleaseButton(props) {
   );
 }
 
-function PrevReleaseButton(props) {
+function PrevReleaseButton(props:any) {
   return(
     <div>
       
@@ -43,7 +42,7 @@ function PrevReleaseButton(props) {
   );
 }
 
-function ChangeRelease(props) {
+function ChangeRelease(props:any) {
 
   const [release_name, setReleaseName] = useState(props.release_name);
   const [youtube_id, setYTID] = useState(props.youtube_id);
@@ -51,7 +50,7 @@ function ChangeRelease(props) {
   const [soundcloud_id, setSCID] = useState(props.soundcloud_id);
   const [release_id, setReleaseID] = useState(props.release_id);
 
-  var clickHandler = (e) => {
+  var clickHandler = (e:any) => {
     setSCID(e[0]);
     setSpID(e[1]);
     setYTID(e[2]);
@@ -89,9 +88,9 @@ function ChangeRelease(props) {
         </form>
       </div>    
       <div className="grid grid-cols-[1fr_50px_1fr] text-xl absolute bottom-0 content-center w-full bg-gradient-to-t from-black to-transparent" >
-        <PrevReleaseButton release_id={release_id} onClick={(e) => clickHandler(e)} />
+        <PrevReleaseButton release_id={release_id} onClick={(e:any) => clickHandler(e)} />
         <p className="border border-fuchsia-800 bg-origin-padding bg-fuchsia-600 backdrop-blur-sm bg-opacity-40 py-3">{release_id}</p>
-        <NextReleaseButton release_id={release_id} onClick={(e) => clickHandler(e)} />
+        <NextReleaseButton release_id={release_id} onClick={(e:any) => clickHandler(e)} />
       </div>
     </div>
 
