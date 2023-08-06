@@ -178,6 +178,34 @@ const TempoDisplay = (props:any) => {
   );
 }
 
+const OscillatorSelect = (props:any) => {
+
+  var oscillatorFnuction:any = () => {
+
+  };
+  if(props.fm) {
+    if(props.oscillatorName === "LFO") {
+      oscillatorFnuction = () => {
+        props.fm.start_lfo()
+      };
+    } else if (props.oscillatorName === "Primary") {
+      oscillatorFnuction = () => {
+        props.fm.start_primary_oscillator()
+      };
+    } else if (props.oscillatorName === "Frequency") {
+      oscillatorFnuction = () => {
+        props.fm.start_frequency_oscillator()
+      };
+    }
+  }
+
+  return(
+    <div>
+      <input name="oscillator_toggle" id={props.oscillatorName} type="checkbox" value={props.oscillatorName} onChange={(e) => {oscillatorFnuction()}} />
+    </div>
+  );
+}
+
 const WaveSelect = (props:any) => {
 
   var selectWave = (fm:any, event:any, componentName:any) => {
@@ -249,6 +277,8 @@ const FMOscillator = (props:Synthesizer) => {
             <PrimaryGain fm={fm} setFM={setFM} />
             <br />
             <PrimarySlider fm={fm} setFM={setFM} />
+            <br />
+            <OscillatorSelect fm={fm} oscillatorName={"Primary"} />
           </div>
           <WaveSelect fm={fm} setFM={setFM} componentName={"Primary Wave"}/>
         </div>
@@ -258,6 +288,8 @@ const FMOscillator = (props:Synthesizer) => {
             <FMFrequency fm={fm} setFM={setFM} />
             <br />
             <FMAmount fm={fm} setFM={setFM} />
+            <br />
+            <OscillatorSelect fm={fm} oscillatorName={"Frequency"} />
           </div>
           <WaveSelect fm={fm} setFM={setFM} componentName={"FM Wave"}/>
         </div>
@@ -267,6 +299,8 @@ const FMOscillator = (props:Synthesizer) => {
             <LFOFrequency fm={fm} setFM={setFM} />
             <br />
             <LFOAmplitude fm={fm} setFM={setFM} />
+            <br />
+            <OscillatorSelect fm={fm} oscillatorName={"LFO"} />
           </div>
           <WaveSelect fm={fm} setFM={setFM} componentName={"LFO"}/>
         </div>
