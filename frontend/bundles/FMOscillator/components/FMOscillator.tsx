@@ -203,10 +203,10 @@ const WaveSelect = (props:any) => {
     <div className="text-l">
       <h3>{props.componentName}</h3>
       <ul>
-        <li><label htmlFor="sine">Sine: </label><input name="oscillator_type" id="sine" type="radio" value="sine" onChange={(e) => {selectWave(props.fm, e, props.componentName)}} /></li>
-        <li><label htmlFor="triangle">Triangle: </label><input name="oscillator_type" id="triangle" type="radio" value="triangle" onChange={(e) => {selectWave(props.fm, e, props.componentName)}} /></li>
-        <li><label htmlFor="sawtooth">Sawtooth: </label><input name="oscillator_type" id="sawtooth" type="radio" value="sawtooth" onChange={(e) => {selectWave(props.fm, e, props.componentName)}} /></li>
-        <li><label htmlFor="square">Square: </label><input name="oscillator_type" id="square" type="radio" value="square" onChange={(e) => {selectWave(props.fm, e, props.componentName)}} /></li>
+        <li><label htmlFor="sine">Sine: </label><input name={"oscillator_type_"+props.componentName} id="sine" type="radio" value="sine" checked onChange={(e) => {selectWave(props.fm, e, props.componentName)}} /></li>
+        <li><label htmlFor="triangle">Triangle: </label><input name={"oscillator_type_"+props.componentName} id="triangle" type="radio" value="triangle" onChange={(e) => {selectWave(props.fm, e, props.componentName)}} /></li>
+        <li><label htmlFor="sawtooth">Sawtooth: </label><input name={"oscillator_type_"+props.componentName} id="sawtooth" type="radio" value="sawtooth" onChange={(e) => {selectWave(props.fm, e, props.componentName)}} /></li>
+        <li><label htmlFor="square">Square: </label><input name={"oscillator_type_"+props.componentName} id="square" type="radio" value="square" onChange={(e) => {selectWave(props.fm, e, props.componentName)}} /></li>
       </ul>
     </div>
   );
