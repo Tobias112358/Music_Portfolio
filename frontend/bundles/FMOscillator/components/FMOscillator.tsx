@@ -5,28 +5,29 @@ import '../../../css/application.css'
 
 var isSynthActive = false;
 
+const play = (fm:any, wasm:any, setTempo:any) => {
+  if (fm === null || fm === undefined) {
+    fm = new wasm.FmOsc();
+    fm.set_note(50);
+    fm.set_fm_frequency(0);
+    fm.set_fm_amount(0);
+    fm.set_gain(0.8);
+    setTempo(fm.get_tempo());
+    //fm.get_midi_access();
+
+    isSynthActive = true;
+    //StartSequence(fm);
+    
+  } else {
+    isSynthActive = false;
+    fm.free();
+    fm = null;
+  }
+  return fm;
+}
 
 const PlayButton = (props: { setFM: (arg0: any) => void; fm: any; wasm: any; setTempo: any; }) => {
-  var play = (fm:any, wasm:any, setTempo:any) => {
-    if (fm === null || fm === undefined) {
-      fm = new wasm.FmOsc();
-      fm.set_note(50);
-      fm.set_fm_frequency(0);
-      fm.set_fm_amount(0);
-      fm.set_gain(0.8);
-      setTempo(fm.get_tempo());
-      //fm.get_midi_access();
-
-      isSynthActive = true;
-      //StartSequence(fm);
-      
-    } else {
-      isSynthActive = false;
-      fm.free();
-      fm = null;
-    }
-    return fm;
-  }
+  
 
   return(
     <div className={props.fm ? "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded w-28 text-center float-center my-4" : "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded w-28 text-center float-center my-4"}>
@@ -183,25 +184,37 @@ const OscillatorSelect = (props:any) => {
   var oscillatorFnuction:any = () => {
 
   };
-  if(props.fm) {
-    if(props.oscillatorName === "LFO") {
-      oscillatorFnuction = () => {
-        props.fm.start_lfo()
-      };
-    } else if (props.oscillatorName === "Primary") {
-      oscillatorFnuction = () => {
-        props.fm.start_primary_oscillator()
-      };
-    } else if (props.oscillatorName === "Frequency") {
-      oscillatorFnuction = () => {
-        props.fm.start_frequency_oscillator()
-      };
+  useEffect(() => {
+    if(props.fm) {
+      if(props.oscillatorName === "LFO") {
+        oscillatorFnuction = () => {
+          props.fm.toggle_lfo();
+        };
+      } else if (props.oscillatorName === "Primary") {
+        oscillatorFnuction = () => {
+          props.fm.toggle_primary_oscillator();
+          console.log(props.fm.get_primary_is_on());
+        };
+      } else if (props.oscillatorName === "Frequency") {
+        /*if(props.fm.get_lfo_is_on()) {
+          oscillatorFnuction = () => {
+            props.fm.stop_frequency()
+          };
+        } else {
+          oscillatorFnuction = () => {
+            props.fm.start_frequency()
+          };
+        }*/
+        oscillatorFnuction = () => {
+          props.fm.toggle_frequency_oscillator();
+        };
+      }
     }
-  }
+  }, [props.fm]);
 
   return(
-    <div>
-      <input name="oscillator_toggle" id={props.oscillatorName} type="checkbox" value={props.oscillatorName} onChange={(e) => {oscillatorFnuction()}} />
+    <div className="bg-slate-900">
+      <input className="bg-green-900 text-green-500" name="oscillator_toggle" id={props.oscillatorName} type="checkbox" value={props.oscillatorName} onChange={(e) => {oscillatorFnuction()}} />
     </div>
   );
 }
@@ -252,6 +265,13 @@ const FMOscillator = (props:Synthesizer) => {
   const [tempo, setTempo] = useState('-');
 
   useEffect(() => {
+    if(wasm != null){
+      setName("Synthesizer");
+      setFM(play(fm, wasm, setTempo));
+    }
+  }, [wasm]);
+
+  useEffect(() => {
     loadWasm();
   });
 
@@ -261,16 +281,15 @@ const FMOscillator = (props:Synthesizer) => {
     } catch(err) {
       console.error(`Unexpected error in loadWasm. [Message: ${err.message}]`);
     }
-    setName("big old name");
   };
 
   return (
     <div className="text-xl" >
       <h3 className="">Osc, {name}!</h3>
       <hr />
-      <div className="w-screen flex items-center justify-center">
+      {/*<div className="w-screen flex items-center justify-center">
         <PlayButton fm={fm} setFM={setFM} wasm={wasm} setTempo={setTempo} />
-      </div>
+      </div>*/}
       <div className="grid grid-cols-4 w-fit bg-slate-300 text-center">
         <div className="border-2 grid grid-cols-2 m-4" >
           <div className="padding-2">
